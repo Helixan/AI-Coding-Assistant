@@ -11,7 +11,7 @@ app = FastAPI()
 async def generate_code(request: PromptRequest):
     try:
         code = await generate_code_with_o1(request.prompt)
-        # Store in DB
+
         await prompts_collection.insert_one({
             "prompt": request.prompt,
             "response": code,
@@ -25,7 +25,6 @@ async def generate_code(request: PromptRequest):
 async def explain_code(request: ExplanationRequest):
     try:
         explanation = await explain_code_with_gpt4(request.code)
-        # Optional: Not storing explanations for now, but could be added
         return {"explanation": explanation}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

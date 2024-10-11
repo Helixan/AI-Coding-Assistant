@@ -8,12 +8,9 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 async def generate_code_with_o1(prompt: str) -> str:
-    # Improved prompt to guide Codex
     code_prompt = (
-        f"### Instruction:\n"
         f"Generate clear, well-structured code that completes the following:\n"
         f"{prompt}\n"
-        f"### Code:\n"
     )
 
     response = client.chat.completions.create(model="o1-mini",
@@ -22,8 +19,6 @@ async def generate_code_with_o1(prompt: str) -> str:
     return response.choices[0].message.content.strip()
 
 async def explain_code_with_gpt4(code: str) -> str:
-    # Using GPT-4 if available. If not, fallback to GPT-3.5-turbo
-    # For demonstration, assume GPT-4 access is available.
     explanation_prompt = (
         f"Explain what the following code does, step by step, in a concise and clear manner:\n\n"
         f"```{code}```\n"
