@@ -38,7 +38,7 @@ function getWebviewContent(history: HistoryItem[]): string {
                 margin-bottom: 10px;
             }
             pre {
-                background: #f4f4f4;
+                background: #151515;
                 padding: 5px;
                 white-space: pre-wrap;
                 word-wrap: break-word;
