@@ -1,7 +1,16 @@
 from fastapi import FastAPI, HTTPException
-from .models import PromptRequest, ExplanationRequest, HistoryItem
+from .models import (
+    PromptRequest,
+    ExplanationRequest,
+    HistoryItem,
+    SuggestRequest
+)
 from .database import prompts_collection
-from .handlers import generate_code_with_o1, explain_code_with_gpt4
+from .handlers import (
+    generate_code_with_o1,
+    explain_code_with_gpt4,
+    suggest_inline_code
+)
 from datetime import datetime
 from typing import List
 
@@ -34,5 +43,22 @@ async def get_history():
     cursor = prompts_collection.find().sort("created_at", -1).limit(20)
     items = []
     async for doc in cursor:
-        items.append(HistoryItem(prompt=doc["prompt"], response=doc["response"], created_at=doc["created_at"]))
+        items.append(HistoryItem(
+            prompt=doc["prompt"],
+            response=doc["response"],
+            created_at=doc["created_at"]
+        ))
     return items
+
+@app.post("/suggest-code")
+async def suggest_code(request: SuggestRequest):
+    try:
+        print("Test")
+        suggestion = await suggest_inline_code(
+            partial_code=request.partial_code,
+            workspace_context=request.workspace_context
+        )
+        print(suggestion)
+        return {"suggestion": suggestion}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
