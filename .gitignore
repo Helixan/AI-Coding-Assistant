@@ -55,14 +55,12 @@ build/
 .node_repl_history
 
 # dotenv environment variables file
-.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
 # IDEs and editors
-.vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
@@ -180,7 +178,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -222,7 +219,6 @@ cython_debug/
 **/build/
 
 # VS Code settings
-.vscode/
 *.code-workspace
 
 # ============================
