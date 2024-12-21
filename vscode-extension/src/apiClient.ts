@@ -17,3 +17,12 @@ export async function fetchHistory(): Promise<HistoryItem[]> {
     const response = await axios.get(`${API_URL}/history`);
     return response.data;
 }
+
+export async function requestInlineSuggestion(partialCode: string, workspaceContext: string[]): Promise<string> {
+    const body = {
+        partial_code: partialCode,
+        workspace_context: workspaceContext
+    };
+    const response = await axios.post(`${API_URL}/suggest-code`, body);
+    return response.data.suggestion;
+}
